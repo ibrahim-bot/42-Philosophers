@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ichougra <ichougra@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ibrahim <ibrahim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 14:08:44 by ichougra          #+#    #+#             */
-/*   Updated: 2021/05/12 17:20:15 by ichougra         ###   ########lyon.fr   */
+/*   Updated: 2021/05/17 06:12:51 by ibrahim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,21 @@ void    *funct1(void *arg)
     return (NULL);
 }
 
+int error(int ac, char **av)
+{
+    if (ft_atoi(av[1]) <= 1)
+        
+}
+
 int main(int ac, char **av)
 {
     pthread_t t1;
 
     
-
+    if (error(ac, av) == -1)
+        return (-1);
  
     pthread_create(&t1, NULL, funct1, NULL);
-
-
 
 
     pthread_join(t1, NULL);
