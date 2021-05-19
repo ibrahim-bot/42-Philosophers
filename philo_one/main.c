@@ -6,7 +6,7 @@
 /*   By: ichougra <ichougra@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 14:08:44 by ichougra          #+#    #+#             */
-/*   Updated: 2021/05/18 18:32:04 by ichougra         ###   ########lyon.fr   */
+/*   Updated: 2021/05/19 16:24:45 by ichougra         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	eat_philo(t_philo *philo)
 {
-	printf("%d 1 is eating\n", philo->arg.tf_eat);
+	printf("%d %d is eating\n", philo->arg.tf_eat, philo->id);
 	usleep(philo->arg.tf_eat * 1000);
 	
 }
@@ -32,55 +32,31 @@ void	think_philo(t_philo *philo)
 	
 }
 
-void    *funct1(void *arg)
+void *compt_time()
 {
-	t_philo *philo = arg;
-
-	while (1)
-	{
-		eat_philo(philo);
-		sleep_philo(philo);
-		think_philo(philo);
-	}
+	printf("OUUUIIIIII\n");
 	return (NULL);
 }
 
-int error(int ac, char **av)
+void    *funct1(void *arg)
 {
-	int i;
+	t_philo *philo = (t_philo *)arg; 
+	pthread_t time;
+	int ret;
 
-	i = 1;
-	if (ac != 5 && ac != 6)
+	ret = pthread_create(&time, NULL, compt_time, NULL);
+	if (ret)
 	{
-		write(1, "ADD 5 or 6 arg\n", 16);
-		return (-1);
+		write(1, "Error: pthread\n", 16);
+		return (NULL);
 	}
-	if (ft_atoi(av[1]) < 1)
+	while (1)
 	{
-		write(1, "Error: add more philosopher\n", 29);
-		return (-1);
+		eat_philo(philo);
+		// sleep_philo(philo);
+		// think_philo(philo);
 	}
-	while (av[i])
-	{
-		if (ft_atoi(av[i]) <= 0)
-		{
-			write(1, "Error: argument must be > 0\n", 29);
-			return (-1);
-		}
-		i++;
-	}
-	return (0);  
-}
-
-void init_struct(t_philo *philo, char **av, int ac)
-{
-	philo->arg.pnb = ft_atoi(av[1]);
-	philo->arg.t_eat = ft_atoi(av[2]);
-	philo->arg.tf_eat = ft_atoi(av[3]);
-	philo->arg.t_sleep = ft_atoi(av[4]);
-	philo->arg.all_eat = 0;
-	if (ac == 6)
-		philo->arg.all_eat = ft_atoi(av[5]);
+	return (NULL);
 }
 
 void reading(char **av, pthread_t *t1, t_philo *philo)
@@ -91,7 +67,8 @@ void reading(char **av, pthread_t *t1, t_philo *philo)
 	i = 0;
 	while (i < ft_atoi(av[1]))
 	{
-		ret = pthread_create(&t1[i], NULL, funct1, philo);
+		philo->id = i;
+		ret = pthread_create(&t1[i], NULL, funct1, (void *)philo);
 		if (ret)
 		{
 			write(1, "Error: pthread\n", 16);

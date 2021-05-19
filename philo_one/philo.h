@@ -6,7 +6,7 @@
 /*   By: ichougra <ichougra@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 17:20:34 by ichougra          #+#    #+#             */
-/*   Updated: 2021/05/18 15:32:43 by ichougra         ###   ########lyon.fr   */
+/*   Updated: 2021/05/19 16:13:14 by ichougra         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+// pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 typedef struct	s_arg
 {
@@ -31,10 +31,12 @@ typedef struct	s_arg
 
 typedef struct	s_philo
 {
-	t_arg arg;
+	int		id;
+	t_arg	arg;
 } 				t_philo;
 
 int				ft_atoi(const char *str);
-
+int				error(int ac, char **av);
+void			init_struct(t_philo *philo, char **av, int ac);
 
 #endif
