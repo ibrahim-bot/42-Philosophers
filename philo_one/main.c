@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ichougra <ichougra@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ibrahim <ibrahim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 14:08:44 by ichougra          #+#    #+#             */
-/*   Updated: 2021/05/19 16:24:45 by ichougra         ###   ########lyon.fr   */
+/*   Updated: 2021/05/24 21:59:13 by ibrahim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	sleep_philo(t_philo *philo)
 	
 }
 
-void	think_philo(t_philo *philo)
-{
-	printf("0 1 is thinking\n");
+// void	think_philo(t_philo *philo)
+// {
+// 	printf("0 1 is thinking\n");
 	
-}
+// }
 
 void *compt_time()
 {
@@ -91,9 +91,13 @@ int main(int ac, char **av)
 
 	if (error(ac, av) == -1)
 		return (-1);
+
 	init_struct(&philo, av, ac);
+
 	t1 = malloc(sizeof(pthread_t) * ft_atoi(av[1]));
+
 	reading(av, t1, &philo);
+	
 	free(t1);
 	return (0);
 }
