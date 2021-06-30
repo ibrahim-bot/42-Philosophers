@@ -6,98 +6,63 @@
 /*   By: ibrahim <ibrahim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 14:08:44 by ichougra          #+#    #+#             */
-/*   Updated: 2021/05/24 21:59:13 by ibrahim          ###   ########.fr       */
+/*   Updated: 2021/06/30 02:36:46 by ibrahim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	eat_philo(t_philo *philo)
+void	philo_eats(t_philo*philo)
 {
-	printf("%d %d is eating\n", philo->arg.tf_eat, philo->id);
-	usleep(philo->arg.tf_eat * 1000);
-	
+	t_arg *rules;
+
+	rules = philo->arg;
+	pthread_mutex_lock(&(rules->forks[philo->left_fork_id]));
+	action_print(rules, philo->id, "has taken a fork");
+	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
+	action_print(rules, philo->id, "has taken a fork");
+	pthread_mutex_lock(&(rules->meal_check));
+	action_print(rules, philo->id, "is eating");
+	philo->last_meal = times();
+	pthread_mutex_unlock(&(rules->meal_check));
+	smart_sleep(rules->t_eat, rules);
+	(philo->x_ate)++;
+	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
+	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
 }
 
-void	sleep_philo(t_philo *philo)
+void	*funct(void *void_philosopher)
 {
-	printf("%d 1 is sleeping\n", philo->arg.t_sleep);
-	usleep(philo->arg.t_sleep * 1000);
-	
-}
-
-// void	think_philo(t_philo *philo)
-// {
-// 	printf("0 1 is thinking\n");
-	
-// }
-
-void *compt_time()
-{
-	printf("OUUUIIIIII\n");
-	return (NULL);
-}
-
-void    *funct1(void *arg)
-{
-	t_philo *philo = (t_philo *)arg; 
-	pthread_t time;
-	int ret;
-
-	ret = pthread_create(&time, NULL, compt_time, NULL);
-	if (ret)
-	{
-		write(1, "Error: pthread\n", 16);
-		return (NULL);
-	}
-	while (1)
-	{
-		eat_philo(philo);
-		// sleep_philo(philo);
-		// think_philo(philo);
-	}
-	return (NULL);
-}
-
-void reading(char **av, pthread_t *t1, t_philo *philo)
-{
-	int i;
-	int ret;
+	int		i;
+	t_philo	*philo;
+	t_arg	*rules;
 
 	i = 0;
-	while (i < ft_atoi(av[1]))
+	philo = (t_philo *)void_philosopher;
+	rules = philo->arg;
+	if (philo->id % 2)
+		usleep(15000);
+	while (!(rules->dieded))
 	{
-		philo->id = i;
-		ret = pthread_create(&t1[i], NULL, funct1, (void *)philo);
-		if (ret)
-		{
-			write(1, "Error: pthread\n", 16);
-			return ;
-		}
+		philo_eats(philo);
+		if (rules->all_ate)
+			break ;
+		action_print(rules, philo->id, "is sleeping");
+		smart_sleep(rules->t_sleep, rules);
+		action_print(rules, philo->id, "is thinking");
 		i++;
 	}
-	i = 0;
-	while (i < ft_atoi(av[1]))
-	{
-		pthread_join(t1[i], NULL);
-		i++;
-	}
+	return (NULL);
 }
 
 int main(int ac, char **av)
 {
-	pthread_t *t1;
-	t_philo philo;
+	t_arg	val;
 
-	if (error(ac, av) == -1)
+	if (error(ac, av, &val) == -1)
 		return (-1);
-
-	init_struct(&philo, av, ac);
-
-	t1 = malloc(sizeof(pthread_t) * ft_atoi(av[1]));
-
-	reading(av, t1, &philo);
+	if (create_philo(&val) == 1)
+		return (84);
 	
-	free(t1);
 	return (0);
 }
