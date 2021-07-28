@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   death.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibrahim <ibrahim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ichougra <ichougra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 02:25:17 by ibrahim           #+#    #+#             */
-/*   Updated: 2021/06/30 02:36:46 by ibrahim          ###   ########.fr       */
+/*   Updated: 2021/07/28 12:47:26 by ichougra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_death(t_arg *r, t_philo *p)
 {
-	int i;
+	int	i;
 
 	while (!(r->all_ate))
 	{

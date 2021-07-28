@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibrahim <ibrahim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ichougra <ichougra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 18:35:59 by ichougra          #+#    #+#             */
-/*   Updated: 2021/06/30 01:36:20 by ibrahim          ###   ########.fr       */
+/*   Updated: 2021/07/28 12:49:14 by ichougra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_mutex(t_arg *philo)
 {
-	int i;
+	int	i;
 
 	i = philo->nb_philo;
 	while (--i >= 0)
@@ -24,14 +24,14 @@ int	init_mutex(t_arg *philo)
 	}
 	if (pthread_mutex_init(&(philo->writing), NULL))
 		return (1);
-	// if (pthread_mutex_init(&(philo->meal_check), NULL))
-	// 	return (1);
+	if (pthread_mutex_init(&(philo->meal_check), NULL))
+		return (1);
 	return (0);
 }
 
 void	init_philo(t_arg *arg)
 {
-	int i;
+	int	i;
 
 	i = arg->nb_philo;
 	while (--i >= 0)
@@ -43,7 +43,6 @@ void	init_philo(t_arg *arg)
 		arg->philo[i].last_meal = 0;
 		arg->philo[i].arg = arg;
 	}
-	
 }
 
 int	init_struct(t_arg *philo, char **av, int ac)
@@ -55,7 +54,6 @@ int	init_struct(t_arg *philo, char **av, int ac)
 	philo->t_sleep = ft_atoi(av[4]);
 	if (ac == 6)
 		philo->nb_eat = ft_atoi(av[5]);
-
 	if (init_mutex(philo) == 1)
 		return (1);
 	init_philo(philo);

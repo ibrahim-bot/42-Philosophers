@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibrahim <ibrahim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ichougra <ichougra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 23:47:05 by ibrahim           #+#    #+#             */
-/*   Updated: 2021/06/30 00:06:46 by ibrahim          ###   ########.fr       */
+/*   Updated: 2021/07/28 12:48:16 by ichougra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int error(int ac, char **av, t_arg *philo)
+int	error(int ac, char **av, t_arg *philo)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (ac != 5 && ac != 6)
@@ -37,6 +37,6 @@ int error(int ac, char **av, t_arg *philo)
 		i++;
 	}
 	if (init_struct(philo, av, ac))
-        return (-1);
+		return (-1);
 	return (0);
 }

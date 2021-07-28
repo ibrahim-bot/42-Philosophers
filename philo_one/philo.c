@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibrahim <ibrahim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ichougra <ichougra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 01:27:26 by ibrahim           #+#    #+#             */
-/*   Updated: 2021/06/30 02:38:50 by ibrahim          ###   ########.fr       */
+/*   Updated: 2021/07/28 12:51:05 by ichougra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	quit(t_arg *rules, t_philo *philos)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < rules->nb_philo)
@@ -40,8 +40,8 @@ int	create_philo(t_arg *arg)
 			write(1, "Error: pthread_create failed\n", 30);
 			return (1);
 		}
-        philo[i].last_meal = times();
-        i++;
+		philo[i].last_meal = times();
+		i++;
 	}
 	check_death(arg, arg->philo);
 	quit(arg, philo);
